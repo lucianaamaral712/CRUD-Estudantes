@@ -31,9 +31,54 @@
             <td class="col-lg-3 col-md-3 col-sm-3">{{aluno.name}}</td>
             <td class="col-lg-3 col-md-3 col-sm-3">{{aluno.course}}</td>
             <td class="col-lg col-md-4 col-sm-4">
-                <a href="{% url "studant_read" aluno.pk %}" class="btn btn-primary btn-sm">Ver</a>
-                <a href="{% url "studant_update" aluno.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url "studant_delete" aluno.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                <a href="{% url "studant_read" aluno.pk %}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#visuEstudante">Ver</a>
+                    <div class="modal fade" id="visuEstudante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Visualizar dados do estudante</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p> Nome: {{ aluno.name }}<br>
+                Data de nascimento: {{ aluno.birth_date }}<br>
+                Endereço: {{ aluno.city }}<br>
+                Email: {{ aluno.email }}<br>
+                CPF: {{ aluno.cpf }}<br>
+                Telefone: {{ aluno.phone }}<br>
+                Curso: {{ aluno.course }}</p>
+                
+              </div>
+              <div class="modal-footer">
+                <a href="{% url "studant_list" %}" class="btn btn-success">Voltar</a>
+              </div>
+            </div>
+        </div>
+    </div>
+                <a href="{% url "studant_update" aluno.pk %}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#">Editar</a>
+                <a href="{% url "studant_delete" aluno.pk %}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#excluirEstudante">Excluir</a>
+                            <div class="modal fade" id="excluirEstudante" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Deletar cadastro de estudante </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {% csrf_token %}
+                Você tem certeza que desejar excluir {{ aluno.name }}?
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Deletar</button>
+                <a href="{% url "studant_list" %}" class="btn btn-success">Cancelar</a>
+              </div>
+            </div>
+        </div>
+    </div>
             </td>
             </tr>
         {% empty %}
@@ -47,6 +92,7 @@
     <a href="{% url "studant_create" %}" class="btn btn-success btn-sm">Novo</a>
     </div>
     </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
